@@ -15,8 +15,8 @@ const Users = () => {
 
   // -- Table output
   const renderTable = () => users.length > 0 && (
-      <table className='table table-striped border'>
-        <thead className='text-center'>
+      <table className='table table-striped border text-center'>
+        <thead>
         <tr>
           <th scope='col'>Имя</th>
           <th scope='col'>Качества</th>
