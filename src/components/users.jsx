@@ -9,7 +9,7 @@ const Users = () => {
   const renderPhrase = (number) => (
     <div className={`alert text-center fs-3 alert-${['dark', 'danger', 'warning', 'warning'][number] || 'success'}`} role="alert">
       { number > 0 
-        ? `${number} человек${getNumStrEnd(number)} тусанёт с тобой сегодня!`
+        ? `${number} человек${getNumStrEnd(number)} тусан${number % 10 === 1 ? 'ёт' : 'ут'} с тобой сегодня!`
         : `Forever Alone :(` }
     </div>);
 
