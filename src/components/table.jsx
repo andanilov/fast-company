@@ -1,18 +1,18 @@
 import React from 'react';
 
-// Data = {_id : []}
-export default function (data, headers = [],  classes = '') {
-  return (Object.keys(data).length || headers.length) && (
-    <table className={`table ${classes}`}>
-      { headers?.length && (
+// Data = {data: {}, headers = [],  classes = ''}
+export default function (props) {
+  return (Object.keys(props?.data)?.length || props?.headers.length) && (
+    <table className={`table ${props?.classes}`}>
+      { props?.headers.length && (
           <thead>
             <tr>
-              { headers.map((title, i) => <th scope='col' key={ i }>{ title }</th>) }
+              { props?.headers.map((title, i) => <th scope='col' key={ i }>{ title }</th>) }
             </tr>
            </thead>)}
-      { Object.keys(data).length && (
+      { Object.keys(props?.data).length && (
         <tbody>
-            { Object.entries(data).map(([trId, tr]) => (
+            { Object.entries(props?.data).map(([trId, tr]) => (
               <tr key={ trId }>
                 { tr.map((td, tdI) => <td key={ tdI }>{ td }</td>) }
               </tr>))}        

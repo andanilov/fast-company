@@ -1,5 +1,6 @@
 import React from "react";
 
-export default function (text, type = 'success', fnClick = () => {}, ) {
-  return <button type='button' className={`btn btn-${type}`} onClick={fnClick}>{ text }</button>;
+// props = [text, fnClick]
+export default function (props) {
+  return <button type='button' className={`btn btn-${props?.type || 'success'}`} onClick={props?.fnClick}>{ props?.text }</button>;
 }

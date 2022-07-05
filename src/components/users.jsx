@@ -1,21 +1,16 @@
 import React, { useState } from 'react';
 import api from '../api';
 
-import alert from './alert';
-import table from './table';
-import bages from './bages';
-import btn from './btn';
+// -- Components --
+import Bages from './bages';
+import Alert from './alert';
+import Table from './table';
+import Btn from './btn';
+
 import getNumStrEnd from './strNumberEnding';
 
 const Users = () => {
-  // -- Get data
   const [users, setUsers] = useState(api?.users.fetchAll());
-
-  // -- Qualities output
-  const renderQualities = (qualities) => bages(qualities);
-  
-  // -- Delete button output
-  const renderDeleteButton = (id) => btn('Удалить', 'danger', () => handleDelete(id));
 
   // -- Get Phrase
   const renderPhrase = (number) => number > 0 
@@ -28,13 +23,13 @@ const Users = () => {
   // -- Users info for table output
   const usersForTable = 
     users.reduce((usersTable, { _id, name, qualities, profession, completedMeetings, rate }) => {
-      usersTable[String(_id)] = [
+      usersTable[_id] = [
         name,
-        renderQualities(qualities),
+        <Bages key={_id} nameColors={qualities}/>,
         profession.name,
         completedMeetings,
         `${rate} / 5`,
-        renderDeleteButton(_id)
+        <Btn key={_id} text='Удалить' type='danger' fnClick={() => handleDelete(_id)}/>,
       ];
       return usersTable;
     }, {});
@@ -49,16 +44,16 @@ const Users = () => {
     '',];    
  
   // -- User table Render    
-    const renderTable = () => users.length > 0 && table(
-      usersForTable,
-      usersForTableHeaders,
-      'table-striped border text-center',
-    );
+    // const renderTable = () => users.length > 0 && table(
+    //   usersForTable,
+    //   usersForTableHeaders,
+    //   'table-striped border text-center',
+    // );
 
   return (
     <div className='p-4'>
-      { alert(renderPhrase(users.length), ['dark', 'danger', 'warning', 'warning'][users.length] || 'success') }
-      { renderTable() }
+      <Alert text={renderPhrase(users.length)} type={['dark', 'danger', 'warning', 'warning'][users.length] || 'success'}/>
+      { users.length > 0 && <Table data={usersForTable} headers={usersForTableHeaders} classes='text-center' />}
     </div>
   );
 }

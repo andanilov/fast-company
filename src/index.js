@@ -7,12 +7,8 @@ import Users from './components/users';
 
 const root = reactDOMClient.createRoot(document.getElementById('root'));
 
-// root.render(
-//   <React.StrictMode>
-//     <Users />
-//   </React.StrictMode>
-// );
-
 root.render(
+  <React.StrictMode>
     <Users />
+  </React.StrictMode>
 );

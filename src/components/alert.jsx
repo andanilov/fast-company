@@ -1,5 +1,9 @@
 import React from 'react';
 
-export default function (text, style = 'success') {
-  return <div className={`alert text-center fs-3 alert-${style}`} role='alert'>{ text }</div>;
+// props = [text, type]
+export default function (props) {
+  return (
+    <div className={`alert text-center fs-3 alert-${props?.type || 'success'}`} role='alert'>
+        { props?.text }
+    </div>);
 }
