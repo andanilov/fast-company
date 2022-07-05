@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import api from '../api';
 
 // -- Components --
-import Bages from './bages';
-import Alert from './alert';
-import Table from './table';
-import Btn from './btn';
+import Bages from './Bages';
+import Alert from './Alert';
+import Table from './Table';
+import Btn from './Btn';
 
-import getNumStrEnd from './strNumberEnding';
+import { getNumStrEnd } from '../utils';
 
 const Users = () => {
   const [users, setUsers] = useState(api?.users.fetchAll());
@@ -42,13 +42,6 @@ const Users = () => {
     'Встретился [раз]',
     'Оценка',
     '',];    
- 
-  // -- User table Render    
-    // const renderTable = () => users.length > 0 && table(
-    //   usersForTable,
-    //   usersForTableHeaders,
-    //   'table-striped border text-center',
-    // );
 
   return (
     <div className='p-4'>
