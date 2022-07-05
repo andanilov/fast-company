@@ -18,6 +18,7 @@ module.exports = {
         "react"
     ],
     "rules": {
+        "react/display-name" : 0,
     },
     settings: {
         react: {
