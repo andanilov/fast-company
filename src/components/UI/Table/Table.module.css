@@ -1,0 +1,44 @@
+.table {
+    width: 100%;
+}
+
+.table tr {
+    border-bottom: 1px solid #ccc;
+}
+
+.table td, .table th {
+    padding: .5em;
+}
+
+.table th {
+    font-weight: 600;
+}
+.table tr:nth-child(odd) td {
+    background-color: #f2f2f2;
+}
+
+
+/* Transitions */
+.enter {
+	opacity: 0;
+	overflow: hidden;
+	max-height: 0;
+}
+.enterActive {
+	opacity: 1;
+	max-height: 500px;
+	transition: all 500ms ease-out;
+}
+.exit {
+	opacity: 1;
+	max-height: 500px;
+	background-color: inherit;
+}
+.exitActive {
+	opacity: 0;
+	overflow: hidden;
+	max-height: 0;
+	transition: all 500ms ease-out;
+	background-color: #fecaca !important;
+}
+  

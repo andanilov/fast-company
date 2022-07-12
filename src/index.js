@@ -3,12 +3,8 @@ import * as reactDOMClient from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.css';
 
 // --- components
-import Users from './components/Users';
+import App from './App';
 
 const root = reactDOMClient.createRoot(document.getElementById('root'));
 
-root.render(
-  <React.StrictMode>
-    <Users />
-  </React.StrictMode>
-);
+root.render(<App/>);

@@ -1,0 +1,23 @@
+.alert, .info {
+    padding: .7em;
+    font-size: 1.2em;
+    border-left: .5em solid #cbd5e1;
+    background-color: #f1f5f9;
+}
+
+.success {
+    background-color: #ecfccb;
+    color: #3f6212;
+    border-left-color: #bef264;
+}
+
+.danger {
+    background-color: #fef2f2;
+    color: #b91c1c;
+    border-left-color: #fecaca;}
+
+.warning {
+    background-color: #fffbeb;
+    color: #b45309;
+    border-left-color: #fde68a;
+}
