@@ -1,0 +1,28 @@
+.badge {
+  font-weight: normal;
+  letter-spacing: 0.05em;
+  text-transform: lowercase;
+  font-size: 0.85em;
+}
+
+.primary {
+  background-color: #38bdf8;
+} /* Sky */
+.dark {
+  background-color: #71717a;
+} /* Zink 500 */
+.secondary {
+  background-color: #94a3b8;
+} /* State */
+.success {
+  background-color: #84cc16;
+} /* Lime 500 */
+.danger {
+  background-color: #f87171;
+} /* red 400 */
+.warning {
+  background-color: black;
+}
+.info {
+  background-color: #fbbf24;
+} /* Amber 400 */

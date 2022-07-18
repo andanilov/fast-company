@@ -1,0 +1,29 @@
+.nav {
+}
+
+.nav ul {
+  list-style: none;
+}
+
+.nav ul li {
+  display: inline-block;
+  padding: 0em 0.5em;
+  font-size: 1.2em;
+  border-right: 1px solid #ccc;
+}
+
+.nav ul li:last-child {
+  border-right: none;
+}
+
+.nav ul li button {
+  color: black;
+  border: none;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+.active button {
+  color: grey !important;
+  text-decoration: none !important;
+}

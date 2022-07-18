@@ -1,15 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classes from './Alert.module.css';
-import PropsType from 'prop-types';
 
 const Alert = ({ type, text }) => (
-  <div className={`${classes.alert} ${classes[type]}`}>
-    { text }
-  </div>);
+  <div className={`${classes.alert} ${classes[type]}`}>{text}</div>
+);
 
-Alert.PropsType = {
+Alert.propTypes = {
+  type: PropTypes.string,
+  text: PropTypes.string.isRequired,
+};
+
+Alert.defaultProps = {
   type: 'success',
-  text: PropsType.string,
 };
 
 export default Alert;

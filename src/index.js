@@ -7,4 +7,4 @@ import App from './App';
 
 const root = reactDOMClient.createRoot(document.getElementById('root'));
 
-root.render(<App/>);
+root.render(<App />);
