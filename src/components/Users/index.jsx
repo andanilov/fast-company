@@ -22,12 +22,12 @@ const Users = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   // -- Get Phrase
-  const renderPhrase = (number) =>
+  const renderPhrase = (number) => (
     number > 0
       ? `${number} человек${getNumStrEnd(number)} тусан${
-          number % 10 === 1 ? 'ёт' : 'ут'
-        } с тобой сегодня!`
-      : 'Forever Alone :(';
+        number % 10 === 1 ? 'ёт' : 'ут'
+      } с тобой сегодня!`
+      : 'Forever Alone :(');
 
   // -- Delete user from list
   const handleDelete = (id) =>
@@ -42,39 +42,35 @@ const Users = () => {
       prevUsers.map((user) => {
         user._id === id && (user[paramTitle] = newValue);
         return user;
-      })
-    );
+      }));
 
   const usersCrop = getPaginatedData(users, currentPage, usersOnPage);
 
   // -- Users info for table output
-  const usersForTable = usersCrop.reduce(
-    (
-      usersTable,
-      { _id, name, qualities, profession, completedMeetings, rate, bookmark }
-    ) => {
-      usersTable[_id] = [
-        name,
-        <Badges key={_id} nameColors={qualities} />,
-        profession.name,
-        completedMeetings,
-        `${rate} / 5`,
-        <Icon
-          key={_id}
-          type={bookmark ? 'bookmark_added' : 'bookmark_border'}
-          fnClick={() => changeUserParam(_id, 'bookmark', !bookmark)}
-        />,
-        <Btn
-          key={_id}
-          text="Удалить"
-          type="delete"
-          fnClick={() => handleDelete(_id)}
-        />,
-      ];
-      return usersTable;
-    },
-    {}
-  );
+  const usersForTable = usersCrop.reduce((
+    usersTable,
+    { _id, name, qualities, profession, completedMeetings, rate, bookmark },
+  ) => {
+    usersTable[_id] = [
+      name,
+      <Badges key={_id} nameColors={qualities} />,
+      profession.name,
+      completedMeetings,
+      `${rate} / 5`,
+      <Icon
+        key={_id}
+        type={bookmark ? 'bookmark_added' : 'bookmark_border'}
+        fnClick={() => changeUserParam(_id, 'bookmark', !bookmark)}
+      />,
+      <Btn
+        key={_id}
+        text="Удалить"
+        type="delete"
+        fnClick={() => handleDelete(_id)}
+      />,
+    ];
+    return usersTable;
+  }, {});
 
   // -- Users table headers titles
   const usersForTableHeaders = [

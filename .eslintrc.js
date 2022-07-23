@@ -27,5 +27,6 @@ module.exports = {
     'no-param-reassign': 0,
     'operator-linebreak': 0,
     'react/jsx-filename-extension': 0,
+    'implicit-arrow-linebreak' : 0,
   },
 };
