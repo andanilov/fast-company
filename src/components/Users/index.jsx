@@ -29,6 +29,8 @@ const Users = () => {
       } с тобой сегодня!`
       : 'Forever Alone :(');
 
+  // -
+  // - HANDLERS
   // -- Delete user from list
   const handleDelete = (id) =>
     setUsers((prevUsers) => prevUsers.filter(({ _id }) => _id !== id));
@@ -44,8 +46,23 @@ const Users = () => {
         return user;
       }));
 
+  // -
+  // - PAGINATION
+  // -- Users pagination
   const usersCrop = getPaginatedData(users, currentPage, usersOnPage);
 
+  // -- Fix delete all users from last page
+  usersCrop.length < 1 && currentPage >= 2 && setCurrentPage(currentPage - 1);
+
+  const usersPaginationParams = {
+    currentPage,
+    count: users.length,
+    pageSize: usersOnPage,
+    onPageChange: handlePageChange,
+  };
+
+  // -
+  // - RENDER
   // -- Users info for table output
   const usersForTable = usersCrop.reduce((
     usersTable,
@@ -87,28 +104,17 @@ const Users = () => {
     <div className="p-4">
       <Alert
         text={renderPhrase(users.length)}
-        type={
-          ['info', 'danger', 'warning', 'warning'][users.length] || 'success'
-        }
+        type={['info', 'danger', 'warning', 'warning'][users.length] || 'success'}
       />
+
       <div className={classes.paginationArea}>
-        <Pagination
-          currentPage={currentPage}
-          count={users.length}
-          pageSize={usersOnPage}
-          onPageChange={handlePageChange}
-        />
+        <Pagination {...usersPaginationParams} />
       </div>
-      {usersCrop.length > 0 && (
-        <Table data={usersForTable} headers={usersForTableHeaders} />
-      )}
+
+      {usersCrop.length > 0 && <Table data={usersForTable} headers={usersForTableHeaders} />}
+
       <div className={classes.paginationArea}>
-        <Pagination
-          currentPage={currentPage}
-          count={users.length}
-          pageSize={usersOnPage}
-          onPageChange={handlePageChange}
-        />
+        <Pagination {...usersPaginationParams} />
       </div>
     </div>
   );

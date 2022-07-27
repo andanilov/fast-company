@@ -28,5 +28,8 @@ module.exports = {
     'operator-linebreak': 0,
     'react/jsx-filename-extension': 0,
     'implicit-arrow-linebreak' : 0,
+    'no-tabs' : 0,
+    'react/jsx-wrap-multilines': 0,
+    'react/jsx-props-no-spreading': 0,
   },
 };
