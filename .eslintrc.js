@@ -13,6 +13,7 @@ module.exports = {
   },
   plugins: ['react'],
   rules: {
+    'no-console': 0,
     'linebreak-style': 0,
     'react/function-component-definition': 0,
     'import/prefer-default-export': 0,
