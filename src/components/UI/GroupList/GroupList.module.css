@@ -1,0 +1,50 @@
+.group {
+    display: grid;
+    list-style: none;
+    gap: 0.5em;
+    font-size: 1.1em;
+    cursor: pointer;
+    padding: 0;
+}
+
+.group li {
+    background-color: #f2f2f2;
+    padding: 0.2em 0.4em 0.3em;
+    border-radius: 0.2em;
+    position: relative;
+    border: 1px solid #ccc;
+}
+
+.group li.selected {
+    background-color: #84cc16;
+    color: white;
+    border-color: #6dac0e;
+}
+.group li.selected sup {
+    background-color: #6dac0e;
+} 
+
+.group li sup {
+    position: absolute;
+    top: -0.3em;
+    right: -0.4em;
+    background: #acacac;
+    display: flex;
+    border-radius: 50%;
+    color: white;
+    font-size: .8em;
+    font-weight: 600;
+    width: 1.5em;
+    height: 1.5em;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    padding-bottom: 1em;
+    text-transform: uppercase;
+}
+
+.empty {
+    opacity: .3;
+}

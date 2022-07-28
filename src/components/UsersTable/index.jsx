@@ -24,7 +24,6 @@ const UsersTable = ({ users }) => {
   const dispatch = useDispatch();
 
   // -- If no users
-  console.log('users = ', users);
   if (!users.length) {
     return '';
   }
@@ -47,10 +46,11 @@ const UsersTable = ({ users }) => {
       />,
       <Btn
         key={_id}
-        text="Удалить"
         type="delete"
         fnClick={() => dispatch(deleteUserById({ _id }))}
-      />,
+      >
+        Удалить
+      </Btn>,
     ];
     return usersTable;
   }, {});

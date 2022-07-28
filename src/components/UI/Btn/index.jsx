@@ -2,18 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classes from './Btn.module.css';
 
-const Btn = ({ text, type, fnClick }) => (
+const Btn = ({ children, type, fnClick }) => (
   <button
     type="button"
     className={`${classes.btn} ${classes[type]}`}
     onClick={fnClick}
   >
-    {text}
+    {children}
   </button>
 );
 
 Btn.propTypes = {
-  text: PropTypes.string.isRequired,
+  children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
   type: PropTypes.string,
   fnClick: PropTypes.func,
 };

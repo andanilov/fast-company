@@ -32,5 +32,9 @@ module.exports = {
     'no-tabs' : 0,
     'react/jsx-wrap-multilines': 0,
     'react/jsx-props-no-spreading': 0,
+    'import/no-named-as-default': 0,
+    'jsx-a11y/no-noninteractive-element-interactions': 0,
+    'func-names': 0,
+    'react/jsx-closing-tag-location': 0,
   },
 };

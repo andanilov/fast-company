@@ -1,7 +1,7 @@
 .btn {
-  color: white;
+  color: #334155;
   border: none;
-  padding: 0.2em 0.7em 0.3em;
+  padding: 0em 0.7em 0.3em;
   border-radius: 0.3em;
   transition: all 0.5s ease;
 }
@@ -13,8 +13,24 @@
   opacity: 0.8;
 }
 .btn.delete {
+  color: white;
   background-color: #ef4444;
 }
 .btn.delete:hover {
   background-color: #dc2626;
 }
+
+
+.btn.link {
+  color: #737373;
+  background-color: transparent;
+}
+.btn.link sup {
+  padding: 0.5em;
+  font-weight: 700;
+}
+.btn.link:hover {
+  color: black;
+}
+
+

@@ -7,7 +7,6 @@ const Pagination = ({ currentPage, count, pageSize, onPageChange }) =>
   pageSize < count && (
     <nav className={classes.nav}>
       <ul>
-        <li>страницы: </li>
         {_.range(1, Math.ceil(count / pageSize) + 1).map((page) => (
           <li
             className={currentPage === page ? classes.active : ''}
