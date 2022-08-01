@@ -1,32 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
-import { updateUserParamById, deleteUserById } from '../../store/usersSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUserParamById, deleteUserById, setCurrentSort } from '../../store/usersSlice';
 
 import Badges from '../UI/Badges';
 import Icon from '../UI/Icon';
 import Btn from '../UI/Btn';
 import Table from '../UI/Table';
 
-// -- Header table users
-const headerTableUsers = [
-  'имя',
-  'Качества',
-  'Профессия',
-  'Встретился [раз]',
-  'Оценка',
-  'Избранное',
-  '',
-];
-
 const UsersTable = ({ users }) => {
   // -- Global state
   const dispatch = useDispatch();
+  const currentSort = useSelector((state) => state.users.currentSort);
 
   // -- If no users
   if (!users.length) {
     return '';
   }
+
+  const changeSort = (col) => () => dispatch(setCurrentSort(
+    currentSort?.col === col
+      ? { col, type: ['asc', 'desc'][+(currentSort?.type === 'asc')] }
+      : { col, type: 'asc' },
+  ));
+
+  // -- Header table users
+  const headerTableUsers = [
+    { title: 'имя', fnClick: changeSort('name'), sorted: currentSort?.col === 'name' ? currentSort.type : '' },
+    { title: 'Качества' },
+    { title: 'Профессия', fnClick: changeSort('profession.name'), sorted: currentSort?.col === 'profession.name' ? currentSort.type : '' },
+    { title: 'Встретился [раз]', fnClick: changeSort('completedMeetings'), sorted: currentSort?.col === 'completedMeetings' ? currentSort.type : '' },
+    { title: 'Оценка', fnClick: changeSort('rate'), sorted: currentSort?.col === 'rate' ? currentSort.type : '' },
+    { title: 'Избранное', fnClick: changeSort('bookmark'), sorted: currentSort?.col === 'bookmark' ? currentSort.type : '' },
+    { title: '' },
+  ];
 
   // -- Prepare user list for table
   const usersRows = users.reduce((

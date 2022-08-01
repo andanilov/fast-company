@@ -1,10 +1,12 @@
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import _ from 'lodash';
 import { getNumStrEnd } from '../utils/getNumStrEnd';
 import { setUsers, setCurrentPage, setProfessions, setCurrProfessions, setUsersOriginal } from '../store/usersSlice';
 import config from '../conf';
 import api from '../api';
 import { getPaginatedData } from '../utils/getPaginatedData';
+import pipe from '../utils/pipe';
 
 export default function useUsers() {
   const dispatch = useDispatch();
@@ -13,7 +15,11 @@ export default function useUsers() {
   const currentPage = useSelector((state) => state.users.currentPage);
   const professions = useSelector((state) => state.users.professions);
   const currProfessions = useSelector((state) => state.users.currProfessions);
+  const currentSort = useSelector((state) => state.users.currentSort);
+  const currentSearchStr = useSelector((state) => state.users.currentSearchStr);
 
+  // ---
+  // --- METHODS
   const renderPhrase = (number) => (
     number > 0
       ? `${number} человек${getNumStrEnd(number)} тусан${
@@ -32,21 +38,19 @@ export default function useUsers() {
     getPaginatedData(users, currentPage, config.USERS_ON_PAGE), [users, currentPage]);
 
   // --- Filtred users by Professions
-  const getFiltredUsersByProfs = () => usersOriginal && (!currProfessions.length
-    ? usersOriginal
-    : usersOriginal.filter(({ profession }) =>
+  const getFiltredUsersByProfs = (usrs = usersOriginal) => usrs && (!currProfessions.length
+    ? usrs
+    : usrs.filter(({ profession }) =>
       currProfessions.includes(profession._id))
   );
 
-  // --- Apply professions filter
-  useEffect(() => {
-    dispatch(setUsers(getFiltredUsersByProfs()));
-  }, [currProfessions, usersOriginal]);
+  // --- Sorted users by col and type
+  const getSortedUsers = (usrs = usersOriginal) => ((usrs && currentSort?.col && currentSort?.type)
+    ? _.orderBy(usrs, [currentSort.col], [currentSort.type])
+    : usrs);
 
-  // --- Check if all users were deleted from last page
-  useEffect(() => {
-    getPaginatedUsers?.length < 1 && currentPage >= 2 && dispatch(setCurrentPage(currentPage - 1));
-  }, [users]);
+  // --- Searching for users by str name
+  const getSearchedUsers = (usrs = usersOriginal) => usrs;
 
   // --- Add user count to professions
   const getProfWithUserCount = (profs, usrs) => {
@@ -61,6 +65,37 @@ export default function useUsers() {
   // --- add users count to professions
   const addUsersCountToProfs = (prfs, usrs) => (prfs !== null && usrs !== null) &&
     dispatch(setProfessions(getProfWithUserCount(prfs, usrs)));
+
+  const togleCurrProf = (profId) => dispatch(setCurrProfessions(
+    currProfessions.includes(profId)
+      ? currProfessions.filter((id) => id !== profId)
+      : [...currProfessions, profId],
+  ));
+
+  const clearCurrProf = () => dispatch(setCurrProfessions([]));
+
+  // ---
+  // --- HOOKS
+  // --- Apply filters, searching, sorting
+  useEffect(() => {
+    pipe(
+      getFiltredUsersByProfs, // 1. Filter users by professions
+      getSearchedUsers, // 2. Search users
+      getSortedUsers, // 3. Sort users
+      setUsers, // 4. Make action
+      dispatch, // 5. Add action to Redux
+    )(usersOriginal); // Initial pipe (first data)
+  }, [
+    currProfessions,
+    usersOriginal,
+    currentSort,
+    currentSearchStr,
+  ]);
+
+  // --- Check if all users were deleted from last page
+  useEffect(() => {
+    getPaginatedUsers?.length < 1 && currentPage >= 2 && dispatch(setCurrentPage(currentPage - 1));
+  }, [users]);
 
   // --- If change Original users (delete) to update professions user count
   useEffect(() => { addUsersCountToProfs(professions, usersOriginal); }, [usersOriginal]);
@@ -86,14 +121,6 @@ export default function useUsers() {
       }
     }());
   }, []);
-
-  const togleCurrProf = (profId) => dispatch(setCurrProfessions(
-    currProfessions.includes(profId)
-      ? currProfessions.filter((id) => id !== profId)
-      : [...currProfessions, profId],
-  ));
-
-  const clearCurrProf = () => dispatch(setCurrProfessions([]));
 
   return {
     renderPhrase,

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import classes from './Table.module.css';
 
@@ -9,8 +10,16 @@ const Table = ({ data, headers }) =>
       {headers.length && (
         <thead>
           <tr>
-            {headers.map((title, i) => (
-              <th scope="col" key={i}>
+            {headers.map(({ title, fnClick, sorted }, i) => (
+              <th
+                scope="col"
+                key={i}
+                onClick={fnClick ?? (() => {})}
+                className={clsx(
+                  classes[sorted] ?? '',
+                  { [classes.btn]: !!fnClick },
+                )}
+              >
                 {title}
               </th>
             ))}

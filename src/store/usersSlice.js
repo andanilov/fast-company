@@ -1,8 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-// import api from '../api';
-
-// const users = api?.users.fetchAll();
-// const professions = api?.professions.fetchAll();
 
 const usersSlice = createSlice({
   name: 'users',
@@ -12,6 +8,8 @@ const usersSlice = createSlice({
     professions: null,
     currProfessions: [],
     currentPage: 1,
+    currentSort: { col: 'name', type: 'asc' },
+    currentSearchStr: '',
   },
   reducers: {
     setUsers(state, action) { state.users = action.payload; },
@@ -33,6 +31,7 @@ const usersSlice = createSlice({
     setCurrentPage(state, action) { state.currentPage = action.payload; },
     setProfessions(state, action) { state.professions = action.payload; },
     setCurrProfessions(state, action) { state.currProfessions = action.payload; },
+    setCurrentSort(state, action) { state.currentSort = action.payload; },
   },
 });
 
@@ -45,4 +44,5 @@ export const {
   setProfessions,
   setCurrProfessions,
   setUsersOriginal,
+  setCurrentSort,
 } = usersSlice.actions;

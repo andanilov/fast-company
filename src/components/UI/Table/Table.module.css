@@ -12,6 +12,19 @@
 .table th {
   padding: 0.5em;
 }
+.table th::after {
+  font-size: .8em;
+  margin-left: .5em;
+}
+
+.table th.asc::after {
+  content: '▼';
+}
+
+.table th.desc::after {
+  content: '▲';
+  
+}
 
 .table th {
   font-weight: 600;
@@ -42,4 +55,8 @@
   max-height: 0;
   transition: all 500ms ease-out;
   background-color: #fecaca !important;
+}
+
+.btn {
+  cursor: pointer;
 }
