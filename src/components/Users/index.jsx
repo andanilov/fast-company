@@ -25,10 +25,10 @@ const Users = () => {
 
   return (
     <section className={classes.section}>
+      {[professions, users].includes(null) && <Loading screen />}
       <aside>
-        {professions === null
-          ? <Loading />
-          : <>
+        {professions !== null
+          && <>
             <GroupList
               title="Профессии"
               items={professions}
@@ -48,9 +48,8 @@ const Users = () => {
           </>}
       </aside>
       <section>
-        {users === null
-          ? <Loading />
-          : (
+        {users !== null
+          && (
             <>
               <div>
                 <Alert
