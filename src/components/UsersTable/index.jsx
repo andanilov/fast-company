@@ -1,17 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUserParamById, deleteUserById, setCurrentSort } from '../../store/usersSlice';
+import useUsers from '../../hooks/useUsers';
 
 import Badges from '../UI/Badges';
 import Icon from '../UI/Icon';
 import Btn from '../UI/Btn';
 import Table from '../UI/Table';
 
-const UsersTable = ({ users }) => {
+const UsersTable = () => {
   // -- Global state
   const dispatch = useDispatch();
   const currentSort = useSelector((state) => state.users.currentSort);
+  const { getPaginatedUsers: users } = useUsers();
 
   // -- If no users
   if (!users.length) {
@@ -65,12 +66,12 @@ const UsersTable = ({ users }) => {
   return <Table data={usersRows} headers={headerTableUsers} />;
 };
 
-UsersTable.propTypes = {
-  users: PropTypes.instanceOf(Array),
-};
+// UsersTable.propTypes = {
+//   users: PropTypes.instanceOf(Array),
+// };
 
-UsersTable.defaultProps = {
-  users: [],
-};
+// UsersTable.defaultProps = {
+//   users: [],
+// };
 
 export default UsersTable;

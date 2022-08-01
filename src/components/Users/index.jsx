@@ -5,10 +5,12 @@ import useUsers from '../../hooks/useUsers';
 
 import UsersTable from '../UsersTable';
 import Alert from '../UI/Alert';
-import Pagination from '../UI/Pagination';
+// import Pagination from '../UI/Pagination';
 import Loading from '../UI/Loading';
 import GroupList from '../UI/GroupList';
 import Btn from '../UI/Btn';
+import UserTablePanel from '../UserTablePanel';
+// import Input from '../UI/Input';
 
 const Users = () => {
   const users = useSelector((state) => state.users.users);
@@ -17,8 +19,6 @@ const Users = () => {
 
   const {
     renderPhrase,
-    paginationParams,
-    getPaginatedUsers,
     togleCurrProf,
     clearCurrProf,
   } = useUsers();
@@ -57,9 +57,9 @@ const Users = () => {
                   type={['info', 'danger', 'warning', 'warning'][users.length] || 'success'}
                 />
               </div>
-              <Pagination {...paginationParams} />
-              <UsersTable users={getPaginatedUsers} />
-              <Pagination {...paginationParams} />
+              <UserTablePanel />
+              <UsersTable />
+              <UserTablePanel />
             </>)}
       </section>
     </section>

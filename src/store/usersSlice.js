@@ -9,7 +9,7 @@ const usersSlice = createSlice({
     currProfessions: [],
     currentPage: 1,
     currentSort: { col: 'name', type: 'asc' },
-    currentSearchStr: '',
+    searchStr: '',
   },
   reducers: {
     setUsers(state, action) { state.users = action.payload; },
@@ -32,6 +32,7 @@ const usersSlice = createSlice({
     setProfessions(state, action) { state.professions = action.payload; },
     setCurrProfessions(state, action) { state.currProfessions = action.payload; },
     setCurrentSort(state, action) { state.currentSort = action.payload; },
+    setSearchStr(state, action) { state.searchStr = action.payload; },
   },
 });
 
@@ -45,4 +46,5 @@ export const {
   setCurrProfessions,
   setUsersOriginal,
   setCurrentSort,
+  setSearchStr,
 } = usersSlice.actions;

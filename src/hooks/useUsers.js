@@ -2,7 +2,14 @@ import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import _ from 'lodash';
 import { getNumStrEnd } from '../utils/getNumStrEnd';
-import { setUsers, setCurrentPage, setProfessions, setCurrProfessions, setUsersOriginal } from '../store/usersSlice';
+import {
+  setUsers,
+  setCurrentPage,
+  setProfessions,
+  setCurrProfessions,
+  setUsersOriginal,
+  setSearchStr,
+} from '../store/usersSlice';
 import config from '../conf';
 import api from '../api';
 import { getPaginatedData } from '../utils/getPaginatedData';
@@ -16,7 +23,7 @@ export default function useUsers() {
   const professions = useSelector((state) => state.users.professions);
   const currProfessions = useSelector((state) => state.users.currProfessions);
   const currentSort = useSelector((state) => state.users.currentSort);
-  const currentSearchStr = useSelector((state) => state.users.currentSearchStr);
+  const searchStr = useSelector((state) => state.users.searchStr);
 
   // ---
   // --- METHODS
@@ -50,7 +57,9 @@ export default function useUsers() {
     : usrs);
 
   // --- Searching for users by str name
-  const getSearchedUsers = (usrs = usersOriginal) => usrs;
+  const getSearchedUsers = (usrs = usersOriginal) => (searchStr
+    ? usrs.filter(({ name }) => name.includes(searchStr))
+    : usrs);
 
   // --- Add user count to professions
   const getProfWithUserCount = (profs, usrs) => {
@@ -74,6 +83,8 @@ export default function useUsers() {
 
   const clearCurrProf = () => dispatch(setCurrProfessions([]));
 
+  const changeSearchStr = (str) => dispatch(setSearchStr(str));
+
   // ---
   // --- HOOKS
   // --- Apply filters, searching, sorting
@@ -89,7 +100,7 @@ export default function useUsers() {
     currProfessions,
     usersOriginal,
     currentSort,
-    currentSearchStr,
+    searchStr,
   ]);
 
   // --- Check if all users were deleted from last page
@@ -128,5 +139,6 @@ export default function useUsers() {
     getPaginatedUsers,
     togleCurrProf,
     clearCurrProf,
+    changeSearchStr,
   };
 }
