@@ -3,27 +3,28 @@ import PropTypes from 'prop-types';
 import Btn from '../Btn';
 
 const BtnDelay = ({ children, fnClick, delay, ...attr }) => {
-  const [time, setTime] = useState(null);
+  const [time, setTime] = useState(delay);
+  var varTime = delay;
 
   const timer = () => {
     console.log('--');
-    console.log('Timer inside: ', time);
+    console.log('Timer [time/varTime]: ', time, varTime);
     setTimeout(() => {
       setTime((prevState) => prevState - 1);
+      varTime -= 1;
       timer();
     }, 1000);
   };
 
   useEffect(() => {
-    console.log('useEffect inside: ', time);
+    console.log('useEffect [time/varTime]: ', time, varTime);
     console.log('--');
   }, [time]);
 
   return (
     <Btn
       fnClick={() => {
-        setTime(delay);
-        timer(delay);
+        timer();
       }}
       {...attr}
     >

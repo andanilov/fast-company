@@ -36,5 +36,6 @@ module.exports = {
     'jsx-a11y/no-noninteractive-element-interactions': 0,
     'func-names': 0,
     'react/jsx-closing-tag-location': 0,
+    'no-var': 0,
   },
 };

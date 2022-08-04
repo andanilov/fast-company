@@ -5,8 +5,9 @@ import useUsers from '../../hooks/useUsers';
 
 import Badges from '../UI/Badges';
 import Icon from '../UI/Icon';
-import Btn from '../UI/Btn';
+// import Btn from '../UI/Btn';
 // import BtnDelay from '../UI/BtnDelay';
+import ButtonDelay from '../UI/ButtonDelay';
 import Table from '../UI/Table';
 
 const UsersTable = () => {
@@ -53,16 +54,14 @@ const UsersTable = () => {
         type={bookmark ? 'bookmark_added' : 'bookmark_border'}
         fnClick={() => dispatch(updateUserParamById({ _id, param: 'bookmark', value: !bookmark }))}
       />,
-      <Btn
+      <ButtonDelay
         key={_id}
         type="delete"
-        fnClick={() => {
-          // console.log('deleted');
-          dispatch(deleteUserById({ _id }));
-        }}
+        delay={3}
+        fnClick={() => dispatch(deleteUserById({ _id }))}
       >
         Удалить
-      </Btn>,
+      </ButtonDelay>,
     ];
     return usersTable;
   }, {});
