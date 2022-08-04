@@ -113,6 +113,11 @@ export default function useUsers() {
 
   // --- Parallel Load Users/Professions and add users count to professions
   useEffect(() => {
+    // -- Pass if loading started!
+    if (usersOriginal || professions) {
+      return;
+    }
+
     let [userLoaded, profLoaded] = [null, null];
     (async function () {
       try {

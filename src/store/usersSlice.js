@@ -47,4 +47,5 @@ export const {
   setUsersOriginal,
   setCurrentSort,
   setSearchStr,
+  setAwaitLoading,
 } = usersSlice.actions;

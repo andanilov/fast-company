@@ -1,11 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUserParamById, deleteUserById, setCurrentSort } from '../../store/usersSlice';
+import { updateUserParamById, setCurrentSort, deleteUserById } from '../../store/usersSlice';
 import useUsers from '../../hooks/useUsers';
 
 import Badges from '../UI/Badges';
 import Icon from '../UI/Icon';
 import Btn from '../UI/Btn';
+// import BtnDelay from '../UI/BtnDelay';
 import Table from '../UI/Table';
 
 const UsersTable = () => {
@@ -55,7 +56,10 @@ const UsersTable = () => {
       <Btn
         key={_id}
         type="delete"
-        fnClick={() => dispatch(deleteUserById({ _id }))}
+        fnClick={() => {
+          // console.log('deleted');
+          dispatch(deleteUserById({ _id }));
+        }}
       >
         Удалить
       </Btn>,
@@ -65,13 +69,5 @@ const UsersTable = () => {
 
   return <Table data={usersRows} headers={headerTableUsers} />;
 };
-
-// UsersTable.propTypes = {
-//   users: PropTypes.instanceOf(Array),
-// };
-
-// UsersTable.defaultProps = {
-//   users: [],
-// };
 
 export default UsersTable;
