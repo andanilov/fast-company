@@ -1,47 +1,58 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import Btn from '../Btn';
+import Button from '../Btn';
 
-const BtnDelay = ({ children, fnClick, delay, ...attr }) => {
-  const [time, setTime] = useState(delay);
-  var varTime = delay;
+const ButtonDelay = ({ delay, delayText, children, fnClick, ...attr }) => {
+  const ntrvl = useRef(null); // Current interval id
+  const [time, setTime] = useState(); // Current seconds left to apply
 
-  const timer = () => {
-    console.log('--');
-    console.log('Timer [time/varTime]: ', time, varTime);
-    setTimeout(() => {
-      setTime((prevState) => prevState - 1);
-      varTime -= 1;
-      timer();
-    }, 1000);
+  // --
+  // -- METHODS
+  const counter = () => {
+    setTime(delay);
+    return setInterval(() => setTime((prevState) => prevState - 1), 1000);
   };
+  const killCounter = (counterId) => {
+    clearInterval(counterId);
+    setTime();
+    ntrvl.current = null;
+  };
+  const toggleClick = () => (ntrvl.current
+    ? killCounter(ntrvl.current)
+    : (ntrvl.current = counter()));
 
+  // --
+  // -- HOOKS
+  // -- Apply click function
   useEffect(() => {
-    console.log('useEffect [time/varTime]: ', time, varTime);
-    console.log('--');
+    if (time <= 0) {
+      killCounter(ntrvl);
+      fnClick();
+    }
   }, [time]);
 
+  // -- Clear interval if page exit
+  useEffect(() => () => ntrvl.current && clearInterval(ntrvl.current), []);
+
   return (
-    <Btn
-      fnClick={() => {
-        timer();
-      }}
-      {...attr}
-    >
-      {`${children} ${time ?? ''}`}
-    </Btn>
-  );
+    <Button fnClick={toggleClick} {...attr}>
+      {time ? `${delayText} ${time}` : children}
+    </Button>);
 };
 
-BtnDelay.propTypes = {
-  fnClick: PropTypes.func,
+ButtonDelay.propTypes = {
   delay: PropTypes.number,
+  delayText: PropTypes.string,
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+  type: PropTypes.string,
+  fnClick: PropTypes.func,
 };
 
-BtnDelay.defaultProps = {
+ButtonDelay.defaultProps = {
+  delay: null,
+  delayText: 'Отменить',
+  type: 'success',
   fnClick: () => {},
-  delay: 5,
 };
 
-export default BtnDelay;
+export default ButtonDelay;

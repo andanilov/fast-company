@@ -1,13 +1,14 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUserParamById, setCurrentSort, deleteUserById } from '../../store/usersSlice';
+// import { updateUserParamById, setCurrentSort } from '../../store/usersSlice';
 import useUsers from '../../hooks/useUsers';
 
 import Badges from '../UI/Badges';
 import Icon from '../UI/Icon';
 // import Btn from '../UI/Btn';
-// import BtnDelay from '../UI/BtnDelay';
-import ButtonDelay from '../UI/ButtonDelay';
+import BtnDelay from '../UI/BtnDelay';
+// import ButtonDelay from '../UI/ButtonDelay';
 import Table from '../UI/Table';
 
 const UsersTable = () => {
@@ -54,14 +55,14 @@ const UsersTable = () => {
         type={bookmark ? 'bookmark_added' : 'bookmark_border'}
         fnClick={() => dispatch(updateUserParamById({ _id, param: 'bookmark', value: !bookmark }))}
       />,
-      <ButtonDelay
+      <BtnDelay
         key={_id}
         type="delete"
         delay={3}
         fnClick={() => dispatch(deleteUserById({ _id }))}
       >
         Удалить
-      </ButtonDelay>,
+      </BtnDelay>,
     ];
     return usersTable;
   }, {});
