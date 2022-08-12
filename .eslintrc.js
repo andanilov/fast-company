@@ -37,5 +37,6 @@ module.exports = {
     'func-names': 0,
     'react/jsx-closing-tag-location': 0,
     'no-return-assign': 0,
+    'no-return-await': 0,
   },
 };

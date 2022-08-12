@@ -1,14 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUserParamById, setCurrentSort, deleteUserById } from '../../store/usersSlice';
-// import { updateUserParamById, setCurrentSort } from '../../store/usersSlice';
 import useUsers from '../../hooks/useUsers';
 
 import Badges from '../UI/Badges';
 import Icon from '../UI/Icon';
-// import Btn from '../UI/Btn';
 import BtnDelay from '../UI/BtnDelay';
-// import ButtonDelay from '../UI/ButtonDelay';
 import Table from '../UI/Table';
 
 const UsersTable = () => {
@@ -45,7 +43,7 @@ const UsersTable = () => {
     { _id, name, qualities, profession, completedMeetings, rate, bookmark },
   ) => {
     usersTable[_id] = [
-      name,
+      <Link to={`/users/${_id}`}>{name}</Link>,
       <Badges key={_id} nameColors={qualities} />,
       profession.name,
       completedMeetings,

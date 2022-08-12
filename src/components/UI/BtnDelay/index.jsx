@@ -26,7 +26,7 @@ const ButtonDelay = ({ delay, delayText, children, fnClick, ...attr }) => {
   // -- Apply click function
   useEffect(() => {
     if (time <= 0) {
-      killCounter(ntrvl);
+      killCounter(ntrvl.current);
       fnClick();
     }
   }, [time]);

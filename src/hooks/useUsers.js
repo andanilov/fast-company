@@ -85,6 +85,8 @@ export default function useUsers() {
 
   const changeSearchStr = (str) => dispatch(setSearchStr(str));
 
+  const getUserById = async (id) => await api.users.fetchUserById(id);
+
   // ---
   // --- HOOKS
   // --- Apply filters, searching, sorting
@@ -145,5 +147,6 @@ export default function useUsers() {
     togleCurrProf,
     clearCurrProf,
     changeSearchStr,
+    getUserById,
   };
 }
