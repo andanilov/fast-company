@@ -82,7 +82,7 @@ export default function UserEdit({ _id, name, email, profession, qualities, sex 
   return (
     <>
       {loading && <Loading screen />}
-      <h2 className="text-center my-3">{`Редактировании пользователя ${name || email || ''}`}</h2>
+      <h2 className="text-center my-3">{`Редактирование пользователя ${name || email || ''}`}</h2>
       <form onSubmit={(event) => event.preventDefault()}>
         <LableWrapper label="Имя" {...nm.inline} Element={Input} />
         <LableWrapper label="Электронная почта" {...ml.inline} Element={Input} />
