@@ -24,7 +24,7 @@ export default function UserEdit({ _id, name, email, profession, qualities, sex 
   const [nm, ml, sx, prfssos, qlts] =
   [useInput(name), useInput(email), useInput(sex), useInput(profession._id), useInput(qualities)];
 
-  const { getAllProfessions, getAllSex, getAllQualities, updateUser } = useUsers();
+  const { getAllProfessions, getAllSex, getAllQualities, updateUser, userLoading } = useUsers();
 
   // Professions list and qualities list loading
   useEffect(() => {
@@ -68,6 +68,7 @@ export default function UserEdit({ _id, name, email, profession, qualities, sex 
       if (!errorsNum) {
         setLoading(true);
         await updateUser(_id, userData);
+        userLoading();
         setLoading(false);
         navigate(`/users/${_id}`);
       }

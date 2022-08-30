@@ -93,6 +93,28 @@ export default function useUsers() {
   const getAllQualities = async () => await api.qualities.fetchAll();
   const updateUser = async (id, data) => await api.users.update(id, data);
 
+  const userLoading = () => {
+    setUsers();
+    let [userLoaded, profLoaded] = [null, null];
+    (async function () {
+      try {
+        [userLoaded, profLoaded] = await Promise.all([
+          (async function () {
+            return dispatch(setUsers(await api?.users.fetchAll()));
+          }()),
+          (async function () {
+            return dispatch(setProfessions(await api?.professions.fetchAll()));
+          }()),
+        ]);
+      } catch (e) {
+        console.error(e.message);
+      } finally {
+        dispatch(setUsersOriginal(userLoaded.payload));
+        addUsersCountToProfs(profLoaded.payload, userLoaded.payload);
+      }
+    }());
+  };
+
   // ---
   // --- HOOKS
   // --- Apply filters, searching, sorting
@@ -122,31 +144,11 @@ export default function useUsers() {
   // --- Parallel Load Users/Professions and add users count to professions
   useEffect(() => {
     // -- Pass if loading started!
-    // if (usersOriginal || professions) {
-    //   return;
-    // }
-
-    let [userLoaded, profLoaded] = [null, null];
-    (async function () {
-      try {
-        [userLoaded, profLoaded] = await Promise.all([
-          (async function () {
-            return dispatch(setUsers(await api?.users.fetchAll()));
-          }()),
-          (async function () {
-            return dispatch(setProfessions(await api?.professions.fetchAll()));
-          }()),
-        ]);
-      } catch (e) {
-        console.error(e.message);
-      } finally {
-        dispatch(setUsersOriginal(userLoaded.payload));
-        addUsersCountToProfs(profLoaded.payload, userLoaded.payload);
-      }
-    }());
+    !usersOriginal && !professions && userLoading();
   }, []);
 
   return {
+    userLoading,
     renderPhrase,
     paginationParams,
     getPaginatedUsers,
