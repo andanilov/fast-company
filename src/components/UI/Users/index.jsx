@@ -1,16 +1,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import classes from './Users.module.css';
-import useUsers from '../../hooks/useUsers';
+import useUsers from '../../../hooks/useUsers';
 
-import UsersTable from '../UsersTable';
-import Alert from '../UI/Alert';
-// import Pagination from '../UI/Pagination';
-import Loading from '../UI/Loading';
-import GroupList from '../UI/GroupList';
-import Btn from '../UI/Btn';
-import UserTablePanel from '../UserTablePanel';
-// import Input from '../UI/Input';
+import UsersTable from './UsersTable';
+import UserTablePanel from './UserTablePanel';
+import Alert from '../../common/Alert';
+import Loading from '../../common/Loading';
+import GroupList from '../../common/GroupList';
+import Btn from '../../common/form/Btn';
 
 const Users = () => {
   const users = useSelector((state) => state.users.users);

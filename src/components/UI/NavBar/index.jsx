@@ -5,7 +5,7 @@ import classes from './NavBar.module.css';
 export default function NavBar() {
   const links = useMemo(() => ([
     { to: '/', title: 'Главная' },
-    { to: '/login', title: 'Логин' },
+    { to: '/login', title: 'Вход' },
     { to: '/users', title: 'Пользователи' },
   ]), []);
 

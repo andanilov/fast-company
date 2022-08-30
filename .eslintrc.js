@@ -38,5 +38,8 @@ module.exports = {
     'react/jsx-closing-tag-location': 0,
     'no-return-assign': 0,
     'no-return-await': 0,
+    'no-shadow' : 0,
+    'react/destructuring-assignment': 0,
+    'no-unused-vars': 0,
   },
 };

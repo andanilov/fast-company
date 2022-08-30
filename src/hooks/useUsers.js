@@ -82,10 +82,16 @@ export default function useUsers() {
   ));
 
   const clearCurrProf = () => dispatch(setCurrProfessions([]));
-
   const changeSearchStr = (str) => dispatch(setSearchStr(str));
-
   const getUserById = async (id) => await api.users.fetchUserById(id);
+  const getAllProfessions = async () => await api.professions.fetchAll();
+  const getAllSex = () => [
+    { _id: 'male', name: 'Мужской' },
+    { _id: 'female', name: 'Женский' },
+    { _id: '', name: 'Европейский' },
+  ];
+  const getAllQualities = async () => await api.qualities.fetchAll();
+  const updateUser = async (id, data) => await api.users.update(id, data);
 
   // ---
   // --- HOOKS
@@ -116,9 +122,9 @@ export default function useUsers() {
   // --- Parallel Load Users/Professions and add users count to professions
   useEffect(() => {
     // -- Pass if loading started!
-    if (usersOriginal || professions) {
-      return;
-    }
+    // if (usersOriginal || professions) {
+    //   return;
+    // }
 
     let [userLoaded, profLoaded] = [null, null];
     (async function () {
@@ -148,5 +154,9 @@ export default function useUsers() {
     clearCurrProf,
     changeSearchStr,
     getUserById,
+    getAllProfessions,
+    getAllSex,
+    getAllQualities,
+    updateUser,
   };
 }

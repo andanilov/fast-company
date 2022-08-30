@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUserParamById, setCurrentSort, deleteUserById } from '../../store/usersSlice';
-import useUsers from '../../hooks/useUsers';
+import { updateUserParamById, setCurrentSort, deleteUserById } from '../../../../store/usersSlice';
+import useUsers from '../../../../hooks/useUsers';
 
-import Badges from '../UI/Badges';
-import Icon from '../UI/Icon';
-import BtnDelay from '../UI/BtnDelay';
-import Table from '../UI/Table';
+import Badges from '../../../common/Badges';
+import Icon from '../../../common/Icon';
+import BtnDelay from '../../../common/form/BtnDelay';
+import Table from '../../../common/Table';
 
 const UsersTable = () => {
   // -- Global state
