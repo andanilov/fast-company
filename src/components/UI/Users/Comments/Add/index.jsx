@@ -26,14 +26,11 @@ const Add = ({ allAuthors, addComment }) => {
     if (!errorsNum) {
       try {
         await addComment(author.inline.value, content.inline.value);
-        author.setValue('');
         content.setValue('');
       } catch (e) {
         console.log('Ошибка при добавлении комментария ', e.message);
       }
     }
-
-    console.log('After', author.inline.value);
   };
 
   return (

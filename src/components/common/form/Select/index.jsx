@@ -1,12 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// interface IValue {
-//   _id: string,
-//   name: string,
-// };
-//
-
 const Select = ({ value, list, onChange, name, error, ...rest }) => (
   <select
     name={name}
@@ -17,7 +11,8 @@ const Select = ({ value, list, onChange, name, error, ...rest }) => (
   >
     <option value="">Выбор...</option>
     {!!list.length && list.map(({ _id, name }) => <option key={_id} value={_id}>{name}</option>)}
-  </select>);
+  </select>
+);
 
 Select.propTypes = {
   name: PropTypes.string,
