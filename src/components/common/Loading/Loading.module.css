@@ -12,6 +12,10 @@
   z-index: 100;
 }
 
+.inline .loader {
+  position: relative;
+}
+
 @-webkit-keyframes enter {
     0% {
       opacity: 0;

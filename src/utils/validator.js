@@ -2,7 +2,6 @@
 export const rules = {
   isRequired: (error = 'Нет данных') => (data) => {
     if (Array.isArray(data)) {
-      console.log('!', data);
       return data.length ? false : error;
     }
     if (typeof data === 'object') {

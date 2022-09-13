@@ -197,8 +197,16 @@ const fetchUserById = (id) =>
         user._id === id)), 1000);
   });
 
+const fetchUserByIds = (ids) =>
+  new Promise((resolve) => {
+    window.setTimeout(() =>
+      resolve(JSON.parse(localStorage.getItem('users')).filter((user) =>
+        ids.includes(user._id))), 1000);
+  });
+
 export default {
   fetchAll,
   fetchUserById,
+  fetchUserByIds,
   update,
 };

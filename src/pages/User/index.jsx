@@ -32,7 +32,7 @@ export default function User({ edit }) {
           {editMode && <UserEdit {...user} />}
           {!editMode && (<>
             <UserCard {...user} />
-            <Link to="edit">Редактировать</Link>
+            {/* <Link to="edit">Редактировать</Link> */}
           </>)}
         </>)}
     </MainLayout>
