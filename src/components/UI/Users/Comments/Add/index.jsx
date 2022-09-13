@@ -9,7 +9,8 @@ import Select from '../../../../common/form/Select';
 import Textarea from '../../../../common/form/Textarea';
 
 const Add = ({ allAuthors, addComment }) => {
-  const [author, content] = [useInput(), useInput()];
+  const [initAuth, setInitAuth] = useState('');
+  const [author, content] = [useInput(initAuth), useInput()];
 
   const handlerAdd = async () => {
     // 1. Validate
@@ -26,6 +27,7 @@ const Add = ({ allAuthors, addComment }) => {
     if (!errorsNum) {
       try {
         await addComment(author.inline.value, content.inline.value);
+        setInitAuth('');
         content.setValue('');
       } catch (e) {
         console.log('Ошибка при добавлении комментария ', e.message);

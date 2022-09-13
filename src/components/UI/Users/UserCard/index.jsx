@@ -42,6 +42,12 @@ const UserCard = ({ _id, name, sex, profession, qualities, completedMeetings, ra
     return true;
   }, []);
 
+  // First loading comments and authors
+  useEffect(() => { (async function () { loadComments(); }()); }, []);
+
+  // Load all authors for add comment form
+  useEffect(() => { api.users.fetchAll().then((users) => setAllAuthors(users)); }, []);
+
   const handlerRemoveComment = useCallback((id) => async () => {
     try {
       setLoading(true);
@@ -60,17 +66,11 @@ const UserCard = ({ _id, name, sex, profession, qualities, completedMeetings, ra
       const newComment = await api.comments.add({ pageId: _id, userId, content });
       setCommentsList([...commentsList, { ...newComment, ...getNameSexById(allAuthors)[userId] }]);
     } catch (e) {
-      console.log('Не удалось добавить комментарий!');
+      console.log('Не удалось добавить комментарий!', e.message);
     } finally {
       setLoading(false);
     }
-  }, [commentsList]);
-
-  // First loading comments and authors
-  useEffect(() => { (async function () { loadComments(); }()); }, []);
-
-  // Load all authors for add comment form
-  useEffect(() => { api.users.fetchAll().then((users) => setAllAuthors(users)); }, []);
+  }, [commentsList, allAuthors]);
 
   return (
     <>
