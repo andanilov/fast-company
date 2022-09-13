@@ -12,6 +12,7 @@ import Loading from '../../../common/Loading';
 const UserCard = ({ _id, name, sex, profession, qualities, completedMeetings, rate }) => {
   const [commentsList, setCommentsList] = useState();
   const [allAuthors, setAllAuthors] = useState();
+  const [loading, setLoading] = useState(false);
 
   const loadComments = useCallback(async () => {
     try {
@@ -39,75 +40,85 @@ const UserCard = ({ _id, name, sex, profession, qualities, completedMeetings, ra
 
   const handlerRemoveComment = useCallback((id) => async () => {
     try {
+      setLoading(true);
       await api.comments.remove(id);
-      await loadComments();
+      commentsList?.length && setCommentsList(commentsList.filter(({ _id }) => _id !== id));
     } catch (e) {
-      console.log('Не удалось удалить комментарий!');
+      console.log('Не удалось удалить комментарий!', e.message);
+    } finally {
+      setLoading(false);
     }
-  }, []);
+  }, [commentsList]);
 
   const addComment = useCallback(async (userId, content) => {
     try {
-      await api.comments.add({ pageId: _id, userId, content });
-      await loadComments();
+      setLoading(true);
+      const newComment = await api.comments.add({ pageId: _id, userId, content });
+      console.log('Try to add comment ', commentsList, newComment);
+      setCommentsList([...commentsList, newComment]);
     } catch (e) {
       console.log('Не удалось добавить комментарий!');
+    } finally {
+      setLoading(false);
     }
-  }, []);
+  }, [commentsList]);
 
   // First loading comments and authors
-  useEffect(() => { (async function () { loadComments(); }()); }, [addComment]);
+  useEffect(() => { (async function () { loadComments(); }()); }, []);
 
   // Load all authors for add comment form
   useEffect(() => { api.users.fetchAll().then((users) => setAllAuthors(users)); }, []);
 
   return (
-    <div className="container-xxl my-4">
-      <div className="row g-3 align-items-start">
-        <aside className="col-md-12 col-lg-4 col-xl-3 d-grid gap-3">
-          <Card>
-            <UserInfo
-              _id={_id}
-              name={name}
-              sex={sex}
-              profession={profession?.name || ''}
-              rate={rate}
-            />
-          </Card>
-
-          {qualities.length && (
-            <Card subTitle="Качества">
-              <Badges nameColors={qualities} />
+    <>
+      {!!loading && <Loading screen />}
+      <div className="container-xxl my-4">
+        <div className="row g-3 align-items-start">
+          <aside className="col-md-12 col-lg-4 col-xl-3 d-grid gap-3">
+            <Card>
+              <UserInfo
+                _id={_id}
+                name={name}
+                sex={sex}
+                profession={profession?.name || ''}
+                rate={rate}
+              />
             </Card>
-          )}
 
-          <Card subTitle="Количество встреч">
-            <h1 className="display-1">{completedMeetings}</h1>
-          </Card>
-        </aside>
-        <main className="col-md-12 col-lg-8 col-xl-9 d-grid gap-3">
-          {allAuthors === undefined
-            ? <Loading inline />
-            : !!allAuthors?.length && (
-              <Card title="Добавить комментарий" align="left">
-                <CommentAdd
-                  allAuthors={allAuthors}
-                  addComment={addComment}
-                />
-              </Card>)}
+            {qualities.length && (
+              <Card subTitle="Качества">
+                <Badges nameColors={qualities} />
+              </Card>
+            )}
 
-          {commentsList === undefined
-            ? <Loading inline />
-            : !!commentsList?.length &&
-              <Card title="Комментарии" align="left">
-                <CommentsList
-                  commentsList={commentsList}
-                  handlerRemove={handlerRemoveComment}
-                />
-              </Card>}
-        </main>
+            <Card subTitle="Количество встреч">
+              <h1 className="display-1">{completedMeetings}</h1>
+            </Card>
+          </aside>
+          <main className="col-md-12 col-lg-8 col-xl-9 d-grid gap-3">
+            {allAuthors === undefined
+              ? <Loading inline />
+              : !!allAuthors?.length && (
+                <Card title="Добавить комментарий" align="left">
+                  <CommentAdd
+                    allAuthors={allAuthors}
+                    addComment={addComment}
+                  />
+                </Card>)}
+
+            {commentsList === undefined
+              ? <Loading inline />
+              : !!commentsList?.length &&
+                <Card title="Комментарии" align="left">
+                  <CommentsList
+                    commentsList={commentsList}
+                    handlerRemove={handlerRemoveComment}
+                  />
+                </Card>}
+          </main>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

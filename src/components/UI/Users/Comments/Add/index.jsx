@@ -32,6 +32,8 @@ const Add = ({ allAuthors, addComment }) => {
         console.log('Ошибка при добавлении комментария ', e.message);
       }
     }
+
+    console.log('After', author.inline.value);
   };
 
   return (

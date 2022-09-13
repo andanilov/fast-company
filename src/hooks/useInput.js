@@ -10,7 +10,7 @@ export default function (defaultValue = '') {
       error,
       onChange: (event) => setValue(event.target.value),
     },
-    setValue,
+    setValue: (value) => setValue(value),
     setError: (value) => {
       setErrorValue(value);
       return value;
