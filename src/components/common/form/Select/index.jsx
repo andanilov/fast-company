@@ -15,7 +15,7 @@ const Select = ({ value, list, onChange, name, error, ...rest }) => (
     defaultValue={value}
     {...rest}
   >
-    <option value="" selected={!value}>Выбор...</option>
+    <option value="">Выбор...</option>
     {!!list.length && list.map(({ _id, name }) => <option key={_id} value={_id}>{name}</option>)}
   </select>);
 

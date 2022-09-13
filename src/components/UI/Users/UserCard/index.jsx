@@ -14,6 +14,9 @@ const UserCard = ({ _id, name, sex, profession, qualities, completedMeetings, ra
   const [allAuthors, setAllAuthors] = useState();
   const [loading, setLoading] = useState(false);
 
+  const getNameSexById = useCallback((users) => users.reduce((acc, { _id, name, sex }) =>
+    ({ ...acc, [_id]: { name, sex } }), {}), []);
+
   const loadComments = useCallback(async () => {
     try {
       setCommentsList();
@@ -27,9 +30,10 @@ const UserCard = ({ _id, name, sex, profession, qualities, completedMeetings, ra
       // Add authors names to comments
       const athrIds = [...new Set(cmmnts.map(({ userId }) => userId))];
       const athr = await api.users.fetchUserByIds(athrIds);
-      const idNameSex = athr.reduce((acc, { _id, name, sex }) =>
-        ({ ...acc, [_id]: { name, sex } }), {});
-      cmmnts = cmmnts.map((ath) => ({ ...ath, ...idNameSex[ath.userId] }));
+      // const idNameSex = athr.reduce((acc, { _id, name, sex }) =>
+      //   ({ ...acc, [_id]: { name, sex } }), {});
+      // const idNameSex = getNameSexById(athr);
+      cmmnts = cmmnts.map((ath) => ({ ...ath, ...getNameSexById(athr)[ath.userId] }));
 
       return setCommentsList(cmmnts);
     } catch (e) {
@@ -54,8 +58,7 @@ const UserCard = ({ _id, name, sex, profession, qualities, completedMeetings, ra
     try {
       setLoading(true);
       const newComment = await api.comments.add({ pageId: _id, userId, content });
-      console.log('Try to add comment ', commentsList, newComment);
-      setCommentsList([...commentsList, newComment]);
+      setCommentsList([...commentsList, { ...newComment, ...getNameSexById(allAuthors)[userId] }]);
     } catch (e) {
       console.log('Не удалось добавить комментарий!');
     } finally {
